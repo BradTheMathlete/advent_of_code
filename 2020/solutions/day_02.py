@@ -19,3 +19,20 @@ def challenge_01(password_db: list) -> int:
 
 print(challenge_01(test_input))
 print(challenge_01(challenge_input))
+
+
+def challenge_02(password_db: list) -> int:
+    valid_passwords = 0
+    for i in password_db:
+        i = i.replace("-", " ").replace(":", "").split()
+        pos_1 = eval(i[0]) - 1
+        pos_2 = eval(i[1]) - 1
+        required_char = i[2]
+        password = i[3]
+        if (password[pos_1] + password[pos_2]).count(required_char) == 1:
+            valid_passwords += 1
+    return valid_passwords
+
+
+print(challenge_02(test_input))
+print(challenge_02(challenge_input))
