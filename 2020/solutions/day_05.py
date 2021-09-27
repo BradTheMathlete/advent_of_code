@@ -37,14 +37,29 @@ def seat_id(boarding_pass: str) -> int:
     return (find_row(boarding_pass) * 8) + find_seat(boarding_pass)
 
 
-def max_id(boarding_passes: list) -> int:
-    max_seat_id = 0
+def all_ids(boarding_passes: list) -> list:
+    all_seat_ids = []
     for bp in boarding_passes:
-        candidate = seat_id(bp)
-        if candidate > max_seat_id:
-            max_seat_id = candidate
-    return max_seat_id
+        all_seat_ids.append(seat_id(bp))
+    return all_seat_ids
 
 
-print(max_id(test_input))
-print(max_id(challenge_input))
+def challenge_01(boarding_passes: list) -> int:
+    return max(all_ids(boarding_passes))
+
+
+print(challenge_01(test_input))
+print(challenge_01(challenge_input))
+
+
+def challenge_02(boarding_passes: list) -> int:
+    all_seat_ids = sorted(all_ids(boarding_passes))
+    exp = min(all_seat_ids)
+    act = 0
+    while exp == all_seat_ids[act]:
+        exp += 1
+        act += 1
+    return exp
+
+
+print(challenge_02(challenge_input))
