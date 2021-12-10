@@ -37,9 +37,29 @@ print(challenge_01(test_input))
 print(challenge_01(challenge_input))
 
 
-# def challenge_02():
-#     pass
+def challenge_02(report: List[str]) -> int:
+    ox_report = report
+    co_report = report
+    bit = 0
+    while len(ox_report) > 1:
+        total = sum([eval(i[bit]) for i in ox_report])
+        if total >= len(ox_report) / 2:
+            target_value = "1"
+        else:
+            target_value = "0"
+        ox_report = [i for i in ox_report if i[bit] == target_value]
+        bit += 1
+    bit = 0
+    while len(co_report) > 1:
+        total = sum([eval(i[bit]) for i in co_report])
+        if total >= len(co_report) / 2:
+            target_value = "0"
+        else:
+            target_value = "1"
+        co_report = [i for i in co_report if i[bit] == target_value]
+        bit += 1
+    return int(ox_report[0], 2) * int(co_report[0], 2)
 
 
-# print(challenge_02(test_input))
-# print(challenge_02(challenge_input))
+print(challenge_02(test_input))
+print(challenge_02(challenge_input))
