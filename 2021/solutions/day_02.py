@@ -28,3 +28,24 @@ def challenge_01(instructions: List[str]) -> int:
 
 print(challenge_01(test_input))
 print(challenge_01(challenge_input))
+
+
+def challenge_02(instructions: List[str]) -> int:
+    aim = 0
+    h_pos = 0
+    d_pos = 0
+    for i in instructions:
+        direction, distance = i.split(" ")
+        if direction == "forward":
+            distance = eval(distance)
+            h_pos += distance
+            d_pos += (distance * aim)
+        if direction == "down":
+            aim += eval(distance)
+        if direction == "up":
+            aim -= eval(distance)
+    return h_pos * d_pos
+
+
+print(challenge_02(test_input))
+print(challenge_02(challenge_input))
