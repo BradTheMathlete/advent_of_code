@@ -38,27 +38,22 @@ print(challenge_01(challenge_input))
 
 
 def challenge_02(report: List[str]) -> int:
-    ox_report = report
-    co_report = report
+    ox_value = find_rating(report, "1", "0")
+    co_value = find_rating(report, "0", "1")
+    return int(ox_value, 2) * int(co_value, 2)
+
+
+def find_rating(report: List[str], g_value: str, l_value: str) -> str:
     bit = 0
-    while len(ox_report) > 1:
-        total = sum([eval(i[bit]) for i in ox_report])
-        if total >= len(ox_report) / 2:
-            target_value = "1"
+    while len(report) > 1:
+        total = sum([eval(i[bit]) for i in report])
+        if total >= len(report) / 2:
+            target_value = g_value
         else:
-            target_value = "0"
-        ox_report = [i for i in ox_report if i[bit] == target_value]
+            target_value = l_value
+        report = [i for i in report if i[bit] == target_value]
         bit += 1
-    bit = 0
-    while len(co_report) > 1:
-        total = sum([eval(i[bit]) for i in co_report])
-        if total >= len(co_report) / 2:
-            target_value = "0"
-        else:
-            target_value = "1"
-        co_report = [i for i in co_report if i[bit] == target_value]
-        bit += 1
-    return int(ox_report[0], 2) * int(co_report[0], 2)
+    return report[0]
 
 
 print(challenge_02(test_input))
