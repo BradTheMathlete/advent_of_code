@@ -16,3 +16,10 @@ def max_calories(processed_data):
     for i in processed_data:
         total_calories.append(sum(i))
     return max(total_calories)
+
+
+def top_three_calories(processed_data):
+    total_calories = []
+    for i in processed_data:
+        total_calories.append(sum(i))
+    return sum(sorted(total_calories)[-3:])
