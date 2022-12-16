@@ -11,15 +11,24 @@ def process_input(input_data):
     return output
 
 
-def max_calories(processed_data):
+def sum_calories(processed_data):
     total_calories = []
     for i in processed_data:
         total_calories.append(sum(i))
-    return max(total_calories)
+    return total_calories
 
 
-def top_three_calories(processed_data):
-    total_calories = []
-    for i in processed_data:
-        total_calories.append(sum(i))
-    return sum(sorted(total_calories)[-3:])
+def top_x_calories(total_calories, x):
+    return sum(sorted(total_calories)[-x:])
+
+
+def main(input_data):
+    processed_data = process_input(input_data)
+    total_calories = sum_calories(processed_data)
+    max_calories = top_x_calories(total_calories, 1)
+    top_3_calories = top_x_calories(total_calories, 3)
+    return max_calories, top_3_calories
+
+
+test_output = main(test_input)
+challenge_output = main(challenge_input)
