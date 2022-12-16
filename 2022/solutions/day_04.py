@@ -13,7 +13,7 @@ def process_input(input_data):
     return [[[eval(x) for x in i.split('-')] for i in j] for j in temp]
 
 
-def check_overlap(assignment_pair):
+def check_overlap_1(assignment_pair):
     a1 = assignment_pair[0]
     a2 = assignment_pair[1]
     if a1[0] >= a2[0] and a1[1] <= a2[1]:
@@ -23,6 +23,25 @@ def check_overlap(assignment_pair):
     return False
 
 
-def count_overlaps(processed_data):
-    overlaps = [check_overlap(i) for i in processed_data]
+def check_overlap_2(assignment_pair):
+    a1 = assignment_pair[0]
+    a2 = assignment_pair[1]
+    if a2[0] <= a1[0] <= a2[1]:
+        return True
+    if a2[0] <= a1[1] <= a2[1]:
+        return True
+    if a1[0] <= a2[0] <= a1[1]:
+        return True
+    if a1[0] <= a2[1] <= a1[1]:
+        return True
+    return False
+
+
+def count_overlaps_1(processed_data):
+    overlaps = [check_overlap_1(i) for i in processed_data]
+    return sum(overlaps)
+
+
+def count_overlaps_2(processed_data):
+    overlaps = [check_overlap_2(i) for i in processed_data]
     return sum(overlaps)
