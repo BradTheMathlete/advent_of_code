@@ -38,10 +38,21 @@ def process_instructions(raw_instructions):
     return instructions
 
 
-def execute_instructions(start_stacks, instructions):
+def execute_instructions_1(start_stacks, instructions):
     stacks = start_stacks
     for i in instructions:
         stacks[i[2]] += list(reversed(stacks[i[1]][-i[0]:]))
+        stacks[i[1]] = stacks[i[1]][:-i[0]]
+    output = ''
+    for s in stacks.values():
+        output += s[-1]
+    return output
+
+
+def execute_instructions_2(start_stacks, instructions):
+    stacks = start_stacks
+    for i in instructions:
+        stacks[i[2]] += stacks[i[1]][-i[0]:]
         stacks[i[1]] = stacks[i[1]][:-i[0]]
     output = ''
     for s in stacks.values():
