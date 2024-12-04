@@ -25,7 +25,6 @@ def level_is_safe_with_dampening(level_data) -> bool:
             return True
     return False
 
-
 def task_02(report_data) -> int:
     safe_levels_with_dampening = [level_is_safe_with_dampening(l) for l in report_data]
     return sum(safe_levels_with_dampening)
