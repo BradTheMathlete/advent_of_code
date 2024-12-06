@@ -1,5 +1,3 @@
-import random
-
 def process_input(input_data):
     temp = input_data.split('\n\n')
     rules = []
