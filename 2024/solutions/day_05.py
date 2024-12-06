@@ -1,3 +1,5 @@
+import random
+
 def process_input(input_data):
     temp = input_data.split('\n\n')
     rules = []
@@ -32,19 +34,42 @@ def task_01(rules, updates) -> int:
             count += middle_value(u)
     return count
 
+def fix_update(rules, update) -> list:
+    update = update.copy()
+    new_update = []
+    for _ in range(len(update) - 1):
+        X = set()
+        Y = set()
+        rel_rules = [r for r in rules if relevant_rule(r, update)]
+        for r in rel_rules:
+            X.add(r[0])
+            Y.add(r[1])
+        new_update += [i for i in X - Y]
+        update.remove(new_update[-1])
+    new_update += update
+    return new_update
+
+def task_02(rules, updates) -> int:
+    count = 0
+    for u in updates:
+        if not is_valid(rules, u):
+            count += middle_value(fix_update(rules, u))
+    return count
+
 def main(input_data):
     rules, updates = process_input(input_data)
     output_01 = task_01(rules, updates)
-    return output_01
+    output_02 = task_02(rules, updates)
+    return output_01, output_02
 
 if __name__ == "__main__":
     test_input = """47|53\n97|13\n97|61\n97|47\n75|29\n61|13\n75|53\n29|13\n97|29\n53|29\n61|53\n97|53\n61|29\n47|13\n75|47\n97|75\n47|61\n75|61\n47|29\n75|13\n53|13\n
 75,47,61,53,29\n97,61,53,29,13\n75,29,13\n75,97,47,61,53\n61,13,29\n97,13,75,29,47"""
     challenge_input = open("2024/inputs/day_05.txt").read()
 
-    test_01 = main(test_input)
-    # test_01, test_02 = main(test_input)
-    challenge_01 = main(challenge_input)
-    # challenge_01, challenge_02 = main(challenge_input)
+    # test_01 = main(test_input)
+    test_01, test_02 = main(test_input)
+    # challenge_01 = main(challenge_input)
+    challenge_01, challenge_02 = main(challenge_input)
 
     print('finished')
