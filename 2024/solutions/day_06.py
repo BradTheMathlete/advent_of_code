@@ -98,7 +98,6 @@ def task_02(map) -> int:
     for i in range(map_size):
         for j in range(map_size):
             if options[i][j] == 'X':
-                print(i, j)
                 if causes_loop(i, j, map, max_steps):
                     count += 1
     return count
