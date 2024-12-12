@@ -7,41 +7,13 @@ def process_input(input_data):
         equations.append([eval(temp[0]), [eval(j) for j in temp[1].lstrip().split(' ')]])
     return equations
 
-def operator_combos(no_values):
-    operators = ['a', 'm']
-    return set(itertools.combinations(operators * (no_values - 1), no_values - 1))
-
-def output_value(operators, values) -> int:
-    output = values[0]
-    for i, o in enumerate(operators):
-        if o == 'a':
-            output += values[i + 1]
-        if o == 'm':
-            output *= values[i + 1]
-    return output
-
-def test_value_achievable(test_value, values) -> bool:
-    o_combos = operator_combos(len(values))
-    for o in o_combos:
-        if test_value == output_value(o, values):
-            return True
-    return False
-
-def task_01(equations) -> int:
-    count = 0
-    for i, j in equations:
-        if test_value_achievable(i, j):
-            count += i
-    return count
-
-def operator_combos_02(no_values):
-    operators = ['a', 'm', 'c']
+def operator_combos(operators, no_values):
     return set(itertools.combinations(operators * (no_values - 1), no_values - 1))
 
 def concat_numbers(a, b) -> int:
     return eval(str(a) + str(b))
 
-def output_value_02(operators, values) -> int:
+def output_value(operators, values) -> int:
     output = values[0]
     for i, o in enumerate(operators):
         if o == 'a':
@@ -52,18 +24,24 @@ def output_value_02(operators, values) -> int:
             output = concat_numbers(output, values[i + 1])
     return output
 
-def test_value_achievable_02(test_value, values) -> bool:
-    o_combos = operator_combos_02(len(values))
+def test_value_achievable(test_value, values, operators) -> bool:
+    o_combos = operator_combos(operators, len(values))
     for o in o_combos:
-        if test_value == output_value_02(o, values):
+        if test_value == output_value(o, values):
             return True
     return False
+
+def task_01(equations) -> int:
+    count = 0
+    for i, j in equations:
+        if test_value_achievable(i, j, ['a', 'm']):
+            count += i
+    return count
 
 def task_02(equations) -> int:
     count = 0
     for i, j in equations:
-        if test_value_achievable_02(i, j):
-            print(i, j)
+        if test_value_achievable(i, j, ['a', 'm', 'c']):
             count += i
     return count
 
