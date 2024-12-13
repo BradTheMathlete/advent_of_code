@@ -50,7 +50,6 @@ def task_01(antenna_map, frequencies) -> int:
                     antinode_map[n[0]][n[1]] = '#'
     return count_antinodes(antinode_map)
 
-
 def all_antinode_positions(a1, a2, map_size):
     antinodes = [a1, a2]
     dist = dist_between_antennas(a1, a2)
@@ -85,7 +84,7 @@ def main(input_data):
 if __name__ == "__main__":
     test_input = '............\n........0...\n.....0......\n.......0....\n....0.......\n......A.....\n............\n............\n........A...\n.........A..\n............\n............'
     challenge_input = open("2024/inputs/day_08.txt").read()
-# 
+
     # test_01 = main(test_input)
     test_01, test_02 = main(test_input)
     # challenge_01 = main(challenge_input)
