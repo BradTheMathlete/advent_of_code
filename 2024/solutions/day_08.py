@@ -1,5 +1,6 @@
 import numpy as np
 import itertools as it
+import math
 
 def process_input(input_data):
     antenna_map = [list(i) for i in input_data.split('\n')]
@@ -49,19 +50,45 @@ def task_01(antenna_map, frequencies) -> int:
                     antinode_map[n[0]][n[1]] = '#'
     return count_antinodes(antinode_map)
 
+
+def all_antinode_positions(a1, a2, map_size):
+    antinodes = [a1, a2]
+    dist = dist_between_antennas(a1, a2)
+    max_dist = max(abs(dist[0]), abs(dist[1]))
+    new_anti_1 = a1
+    new_anti_2 = a2
+    for _ in range(math.ceil(map_size/max_dist)):
+        new_anti_1 = [new_anti_1[0] + dist[0], new_anti_1[1] + dist[1]]
+        new_anti_2 = [new_anti_2[0] - dist[0], new_anti_2[1] - dist[1]]
+        antinodes += [new_anti_1, new_anti_2]
+    return antinodes
+
+def task_02(antenna_map, frequencies) -> int:
+    map_size = len(antenna_map)
+    antinode_map = [['.']* map_size for _ in range(map_size)]
+    for f in frequencies:
+        f_antennas = find_antennas(f, antenna_map)
+        pairs = list_of_pairs(len(f_antennas))
+        for i, j in pairs:
+            new_antinodes = all_antinode_positions(f_antennas[i], f_antennas[j], map_size)
+            for n in new_antinodes:
+                if 0 <= n[0] < map_size and 0 <= n[1] < map_size:
+                    antinode_map[n[0]][n[1]] = '#'
+    return count_antinodes(antinode_map)
+
 def main(input_data):
     antenna_map, frequencies = process_input(input_data)
     output_01 = task_01(antenna_map, frequencies)
-    # output_02 = task_02(equations)
-    return output_01
+    output_02 = task_02(antenna_map, frequencies)
+    return output_01, output_02
 
 if __name__ == "__main__":
     test_input = '............\n........0...\n.....0......\n.......0....\n....0.......\n......A.....\n............\n............\n........A...\n.........A..\n............\n............'
     challenge_input = open("2024/inputs/day_08.txt").read()
-
-    test_01 = main(test_input)
-    # test_01, test_02 = main(test_input)
-    challenge_01 = main(challenge_input)
-    # challenge_01, challenge_02 = main(challenge_input)
+# 
+    # test_01 = main(test_input)
+    test_01, test_02 = main(test_input)
+    # challenge_01 = main(challenge_input)
+    challenge_01, challenge_02 = main(challenge_input)
 
     print('finished')
